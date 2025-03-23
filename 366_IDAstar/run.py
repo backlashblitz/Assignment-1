@@ -3,7 +3,7 @@ import sys
 from agent import Agent
 from environment import Environment
 
-# Constants
+
 WINDOW_WIDTH, WINDOW_HEIGHT = 800, 600
 GRID_SIZE = 40
 STATUS_WIDTH = 200
@@ -14,7 +14,7 @@ TEXT_COLOR = (0, 0, 0)
 BUTTON_COLOR = (0, 200, 0)
 BUTTON_HOVER_COLOR = (0, 255, 0)
 BUTTON_TEXT_COLOR = (255, 255, 255)
-MOVEMENT_DELAY = 200  # Milliseconds
+MOVEMENT_DELAY = 200  
 
 def main():
     pygame.init()
