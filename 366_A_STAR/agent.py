@@ -6,17 +6,17 @@ class Agent(pygame.sprite.Sprite):
     def __init__(self, environment, grid_size):
         super().__init__()
         self.image = pygame.Surface((grid_size, grid_size))
-        self.image.fill((0, 0, 255))  # Agent color is blue
+        self.image.fill((0, 0, 255))  
         self.rect = self.image.get_rect()
         self.grid_size = grid_size
         self.environment = environment
-        self.position = [0, 0]  # Starting at the top-left corner of the grid
+        self.position = [0, 0]  
         self.rect.topleft = (0, 0)
         self.task_completed = 0
         self.completed_tasks = []
-        self.path = []  # List of positions to follow
-        self.moving = False  # Flag to indicate if the agent is moving
-        self.total_path_cost = 0  # Initialize total path cost
+        self.path = []  
+        self.moving = False  
+        self.total_path_cost = 0  
 
     def move(self):
         """Move the agent along the path."""
@@ -24,10 +24,10 @@ class Agent(pygame.sprite.Sprite):
             next_position = self.path.pop(0)
             self.position = list(next_position)
             self.rect.topleft = (self.position[0] * self.grid_size, self.position[1] * self.grid_size)
-            self.total_path_cost += 1  # Increment total path cost
+            self.total_path_cost += 1  
             self.check_task_completion()
         else:
-            self.moving = False  # Stop moving when path is exhausted
+            self.moving = False  
 
     def check_task_completion(self):
         """Check if the agent has reached a task location."""
@@ -48,7 +48,7 @@ class Agent(pygame.sprite.Sprite):
                     shortest_path = path
                     nearest_task = task_position
         if shortest_path:
-            self.path = shortest_path[1:]  # Exclude the current position
+            self.path = shortest_path[1:]  
             self.moving = True
 
     def a_star_search(self, target):
@@ -56,7 +56,7 @@ class Agent(pygame.sprite.Sprite):
         start = tuple(self.position)
         goal = target
         open_list = []
-        heapq.heappush(open_list, (0, start))  # (cost, position)
+        heapq.heappush(open_list, (0, start))  
         came_from = {}
         g_score = {start: 0}
         f_score = {start: self.manhattan_distance(start, goal)}
@@ -74,7 +74,7 @@ class Agent(pygame.sprite.Sprite):
                     g_score[neighbor] = tentative_g_score
                     f_score[neighbor] = tentative_g_score + self.manhattan_distance(neighbor, goal)
                     heapq.heappush(open_list, (f_score[neighbor], neighbor))
-        return None  # No path found
+        return None  
 
     def reconstruct_path(self, came_from, current):
         """Reconstruct the path from the came_from dictionary."""
@@ -92,7 +92,7 @@ class Agent(pygame.sprite.Sprite):
     def get_neighbors(self, x, y):
         """Get walkable neighboring positions."""
         neighbors = []
-        directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]  # up, down, left, right
+        directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]  
         for dx, dy in directions:
             nx, ny = x + dx, y + dy
             if self.environment.is_within_bounds(nx, ny) and not self.environment.is_barrier(nx, ny):
