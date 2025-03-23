@@ -19,7 +19,7 @@ class Agent(pygame.sprite.Sprite):
         self.total_path_cost = 0  
 
     def move(self):
-        """Move the agent along the path."""
+        
         if self.path:
             next_position = self.path.pop(0)
             self.position = list(next_position)
@@ -30,7 +30,7 @@ class Agent(pygame.sprite.Sprite):
             self.moving = False  
 
     def check_task_completion(self):
-        """Check if the agent has reached a task location."""
+       
         position_tuple = tuple(self.position)
         if position_tuple in self.environment.task_locations:
             task_number = self.environment.task_locations.pop(position_tuple)
@@ -38,7 +38,7 @@ class Agent(pygame.sprite.Sprite):
             self.completed_tasks.append(task_number)
 
     def find_nearest_task(self):
-        """Find the nearest task using A* search algorithm."""
+        
         nearest_task = None
         shortest_path = None
         for task_position in self.environment.task_locations.keys():
@@ -52,7 +52,7 @@ class Agent(pygame.sprite.Sprite):
             self.moving = True
 
     def a_star_search(self, target):
-        """Find a path to the target position using A* algorithm."""
+       
         start = tuple(self.position)
         goal = target
         open_list = []
@@ -77,7 +77,7 @@ class Agent(pygame.sprite.Sprite):
         return None  
 
     def reconstruct_path(self, came_from, current):
-        """Reconstruct the path from the came_from dictionary."""
+        
         path = [current]
         while current in came_from:
             current = came_from[current]
@@ -86,11 +86,11 @@ class Agent(pygame.sprite.Sprite):
         return path
 
     def manhattan_distance(self, pos1, pos2):
-        """Calculate the Manhattan distance between two positions."""
+       
         return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
 
     def get_neighbors(self, x, y):
-        """Get walkable neighboring positions."""
+       
         neighbors = []
         directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]  
         for dx, dy in directions:
