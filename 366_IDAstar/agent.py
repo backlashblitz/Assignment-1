@@ -6,18 +6,18 @@ class Agent(pygame.sprite.Sprite):
     def __init__(self, environment, grid_size):
         super().__init__()
         self.image = pygame.Surface((grid_size, grid_size))
-        self.image.fill((0, 0, 255))  # Agent color is blue
+        self.image.fill((0, 0, 255))  
         self.rect = self.image.get_rect()
         self.grid_size = grid_size
         self.environment = environment
-        self.position = [0, 0]  # Starting position
+        self.position = [0, 0]  
         self.rect.topleft = (0, 0)
         self.task_completed = 0
         self.completed_tasks = []
-        self.path = []  # Path for movement
+        self.path = []  
         self.moving = False
-        self.explored_nodes = []  # For visualization
-        self.total_path_cost = 0  # Total movement cost
+        self.explored_nodes = []  
+        self.total_path_cost = 0  
 
 
     def move(self):
@@ -59,10 +59,10 @@ class Agent(pygame.sprite.Sprite):
             temp_path = []
             result = self.search(start, goal, 0, threshold, temp_path)
             if isinstance(result, list):
-                return result  # Found solution path
+                return result  
             if result == float("inf"):
-                return None  # No solution
-            threshold = result  # Increase threshold
+                return None  
+            threshold = result  
 
     def search(self, node, goal, g, threshold, path):
         f = g + self.heuristic(node, goal)
@@ -78,14 +78,14 @@ class Agent(pygame.sprite.Sprite):
                 path.append(neighbor)
                 result = self.search(neighbor, goal, g + 1, threshold, path)
                 if isinstance(result, list):
-                    return result  # Solution found
+                    return result  
                 if result < min_cost:
                     min_cost = result
                 path.pop()
         return min_cost
 
     def heuristic(self, pos, goal):
-        return abs(pos[0] - goal[0]) + abs(pos[1] - goal[1])  # Manhattan distance
+        return abs(pos[0] - goal[0]) + abs(pos[1] - goal[1])  
 
     def get_neighbors(self, x, y):
         neighbors = []
